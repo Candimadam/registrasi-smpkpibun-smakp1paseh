@@ -280,7 +280,7 @@ export default function RegistrationForm() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <Alert variant="destructive">
+          <Alert variant="info">
             <Info />
             <AlertTitle>Catatan Penting!</AlertTitle>
             <AlertDescription>
