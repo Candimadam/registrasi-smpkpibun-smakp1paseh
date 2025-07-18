@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: sma-1kp-paseh
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
 volumes:

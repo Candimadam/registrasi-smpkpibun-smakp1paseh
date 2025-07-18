@@ -1,26 +1,26 @@
 export function WhyUsSection() {
   const features = [
     {
-      title: "Fasilitas Lengkap",
-      description: "Penunjang belajar dengan kualitas terbaik",
-      icon: "💻",
+      title: 'Fasilitas Lengkap',
+      description: 'Penunjang belajar dengan kualitas terbaik',
+      icon: '💻',
     },
     {
-      title: "Lingkungan Nyaman",
-      description: "Berada di lingkungan yang nyaman dan asri",
-      icon: "🏢",
+      title: 'Lingkungan Nyaman',
+      description: 'Berada di lingkungan yang nyaman dan asri',
+      icon: '🏢',
     },
     {
-      title: "Pengajar Kompeten",
-      description: "Guru terbaik dengan pengalaman",
-      icon: "👩‍🏫",
+      title: 'Pengajar Kompeten',
+      description: 'Guru terbaik dengan pengalaman',
+      icon: '👩‍🏫',
     },
     {
-      title: "Kerja Sama Luas",
-      description: "Dapat kesempatan kerja yang lebih terjamin",
-      icon: "🤝",
+      title: 'Kerja Sama Luas',
+      description: 'Dapat kesempatan kerja yang lebih terjamin',
+      icon: '🤝',
     },
-  ];
+  ]
 
   return (
     <section className="bg-white px-6 lg:px-20 py-20 text-center">
@@ -38,13 +38,11 @@ export function WhyUsSection() {
             className="bg-white border border-gray-100 rounded-xl shadow p-6 flex flex-col items-center text-center"
           >
             <div className="text-4xl mb-4">{feature.icon}</div>
-            <h3 className="font-semibold text-lg text-[#1A1A1A]">
-              {feature.title}
-            </h3>
+            <h3 className="font-semibold text-lg text-[#1A1A1A]">{feature.title}</h3>
             <p className="text-sm text-gray-600 mt-2">{feature.description}</p>
           </div>
         ))}
       </div>
     </section>
-  );
+  )
 }

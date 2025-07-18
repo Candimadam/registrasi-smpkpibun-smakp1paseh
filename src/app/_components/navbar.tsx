@@ -1,8 +1,8 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
-import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+'use client'
+import { Button } from '@/components/ui/button'
+import { authClient } from '@/lib/auth-client'
+import Link from 'next/link'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,14 +10,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useRouter } from "next/navigation";
+} from '@/components/ui/dropdown-menu'
+import { useRouter } from 'next/navigation'
 
 export function HomeNavbar() {
-  const {
-    data,
-  } = authClient.useSession()
-  const router = useRouter();
+  const { data } = authClient.useSession()
+  const router = useRouter()
 
   return (
     <nav className="fixed top-0 left-0 w-full px-6 lg:px-20 py-4 flex items-center justify-between bg-white shadow-sm z-50">
@@ -70,29 +68,36 @@ export function HomeNavbar() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar>
-              <AvatarImage src={data.user.image ?? "https://github.com/shadcn.png"} />
+              <AvatarImage src={data.user.image ?? 'https://github.com/shadcn.png'} />
               <AvatarFallback>{data.user.name}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onSelect={async () => {
-              await authClient.signOut({
-                fetchOptions: {
-                  onSuccess: () => {
-                    router.push("/login");
+            <DropdownMenuItem
+              onSelect={async () => {
+                await authClient.signOut({
+                  fetchOptions: {
+                    onSuccess: () => {
+                      router.push('/login')
+                    },
                   },
-                },
-              });
-            }}>Keluar</DropdownMenuItem>
+                })
+              }}
+            >
+              Keluar
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Button asChild className="bg-[#4C33FF] text-white hover:bg-[#3826cc] transition text-sm px-5 py-2 rounded-full">
+        <Button
+          asChild
+          className="bg-[#4C33FF] text-white hover:bg-[#3826cc] transition text-sm px-5 py-2 rounded-full"
+        >
           <Link href="/login">Login</Link>
         </Button>
       )}
     </nav>
-  );
+  )
 }

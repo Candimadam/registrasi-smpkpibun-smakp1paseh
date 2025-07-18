@@ -19,13 +19,12 @@ export function ProfileSection() {
             Sambutan Kepala Sekolah SMA KP 1 Paseh
           </h3>
           <p className="text-gray-600 mb-4">
-            sekolah adalah tempat mencetak penerus bangsa yang berkualitas dan
-            berprestasi di segala bidang yang dapat bersaing di dunia
-            internasional
+            sekolah adalah tempat mencetak penerus bangsa yang berkualitas dan berprestasi di segala
+            bidang yang dapat bersaing di dunia internasional
           </p>
           <p className="text-gray-600 mb-6">
-            dan Sekolah adalah tempat anak-anak mendapatkan dukungan untuk
-            melengkapi pembelajarannya di sekolah
+            dan Sekolah adalah tempat anak-anak mendapatkan dukungan untuk melengkapi
+            pembelajarannya di sekolah
           </p>
           <button className="px-6 py-3 bg-[#4C33FF] text-white rounded-full hover:bg-[#3826cc] transition text-sm">
             Baca Selanjutnya <span className="ml-2">▶</span>
@@ -33,5 +32,5 @@ export function ProfileSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

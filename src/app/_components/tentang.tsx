@@ -1,6 +1,6 @@
-import Facebook from "@/components/svg/facebook-logo";
-import Instagram from "@/components/svg/instagram-logo";
-import YouTube from "@/components/svg/youtube-logo";
+import Facebook from '@/components/svg/facebook-logo'
+import Instagram from '@/components/svg/instagram-logo'
+import YouTube from '@/components/svg/youtube-logo'
 
 export function HomeSection() {
   return (
@@ -11,13 +11,12 @@ export function HomeSection() {
           <span className="text-[#4C33FF]">
             Sekolah Menengah Atas <br />
             KP 1
-          </span>{" "}
+          </span>{' '}
           Paseh
         </h1>
         <p className="mt-4 text-gray-600 max-w-xl">
-          sekolah adalah tempat mencetak penerus bangsa yang berkualitas dan
-          berprestasi di segala bidang yang dapat bersaing di dunia
-          internasional
+          sekolah adalah tempat mencetak penerus bangsa yang berkualitas dan berprestasi di segala
+          bidang yang dapat bersaing di dunia internasional
         </p>
         <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
           <button className="px-6 py-3 bg-[#4C33FF] text-white rounded-full hover:bg-[#3826cc] transition">
@@ -53,10 +52,9 @@ export function HomeSection() {
         </div>
         {/* Bubble Bottom Left */}
         <div className="absolute bottom-6 left-4 bg-white px-4 py-2 rounded-lg shadow text-sm max-w-xs">
-          "Belajar itu Menyenangkan Kuncinya Jangan Pernah Menyerah Oleh Apapun
-          Itu"
+          "Belajar itu Menyenangkan Kuncinya Jangan Pernah Menyerah Oleh Apapun Itu"
         </div>
       </div>
     </section>
-  );
+  )
 }

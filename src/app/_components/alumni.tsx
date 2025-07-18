@@ -1,22 +1,21 @@
 export function AlumniSection() {
   const alumni = [
     {
-      name: "Akane Kurokawa ST",
+      name: 'Akane Kurokawa ST',
       year: 2009,
       description:
-        "Liberti adalah seorang alumi yang bersekolah di Inggris saat ini dan dikenal secara tekal alumni yang berprestasi.",
+        'Liberti adalah seorang alumi yang bersekolah di Inggris saat ini dan dikenal secara tekal alumni yang berprestasi.',
       image:
-        "https://us.oricon-group.com/upimg/detail/1000/1268/img660/0fa2c8ab06f10d6d27431d88a620163b.jpg",
+        'https://us.oricon-group.com/upimg/detail/1000/1268/img660/0fa2c8ab06f10d6d27431d88a620163b.jpg',
     },
     {
-      name: "Aquamarine Hoshino ST",
+      name: 'Aquamarine Hoshino ST',
       year: 2014,
       description:
-        "Liberti adalah seorang alumi yang bersekolah di Inggris saat ini dan dikenal secara tekal alumni yang berprestasi.",
-      image:
-        "https://i.pinimg.com/736x/23/84/6f/23846f6415382094e38d8560d7a8ee7b.jpg",
+        'Liberti adalah seorang alumi yang bersekolah di Inggris saat ini dan dikenal secara tekal alumni yang berprestasi.',
+      image: 'https://i.pinimg.com/736x/23/84/6f/23846f6415382094e38d8560d7a8ee7b.jpg',
     },
-  ];
+  ]
 
   return (
     <section className="bg-white px-6 lg:px-20 py-20 text-center">
@@ -26,10 +25,7 @@ export function AlumniSection() {
       <p className="mt-2 text-gray-600">Profil Alumni SMA KP 1 Paseh.</p>
       <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-10">
         {alumni.map((item, index) => (
-          <div
-            key={index}
-            className="flex flex-col sm:flex-row gap-6 items-center text-left"
-          >
+          <div key={index} className="flex flex-col sm:flex-row gap-6 items-center text-left">
             <img
               src={item.image}
               alt={item.name}
@@ -47,5 +43,5 @@ export function AlumniSection() {
         ))}
       </div>
     </section>
-  );
+  )
 }

@@ -1,37 +1,26 @@
-"use client"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Google from "@/components/svg/google-logo"
-import Link from "next/link"
-import { authClient } from "@/lib/auth-client"
+'use client'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import Google from '@/components/svg/google-logo'
+import Link from 'next/link'
+import { authClient } from '@/lib/auth-client'
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
   const signIn = async () => {
     const data = await authClient.signIn.social({
-      provider: "google"
+      provider: 'google',
     })
   }
 
   return (
-    <div className={cn("max-w-md flex flex-col gap-6", className)} {...props}>
+    <div className={cn('max-w-md flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Selamat datang kembali</CardTitle>
-          <CardDescription>
-            Masuk dengan akun Apple atau Google Anda
-          </CardDescription>
+          <CardDescription>Masuk dengan akun Apple atau Google Anda</CardDescription>
         </CardHeader>
         <CardContent>
           <form>
@@ -50,20 +39,12 @@ export function LoginForm({
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="nama@email.com"
-                    required
-                  />
+                  <Input id="email" type="email" placeholder="nama@email.com" required />
                 </div>
                 <div className="grid gap-3">
                   <div className="flex items-center">
                     <Label htmlFor="password">Kata Sandi</Label>
-                    <a
-                      href="#"
-                      className="ml-auto text-sm underline-offset-4 hover:underline"
-                    >
+                    <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
                       Lupa kata sandi?
                     </a>
                   </div>
@@ -74,7 +55,7 @@ export function LoginForm({
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Belum punya akun?{" "}
+                Belum punya akun?{' '}
                 <Link href="/register" className="underline underline-offset-4">
                   Daftar
                 </Link>
@@ -84,8 +65,8 @@ export function LoginForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        Dengan mengklik lanjutkan, Anda setuju dengan <a href="#">Syarat Layanan</a>{" "}
-        dan <a href="#">Kebijakan Privasi</a> kami.
+        Dengan mengklik lanjutkan, Anda setuju dengan <a href="#">Syarat Layanan</a> dan{' '}
+        <a href="#">Kebijakan Privasi</a> kami.
       </div>
     </div>
   )

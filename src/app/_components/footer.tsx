@@ -3,12 +3,10 @@ export function Footer() {
     <footer className="bg-[#f5f5f5] px-6 lg:px-20 py-10 text-sm text-gray-700">
       <div className="flex flex-col md:flex-row justify-between items-start gap-10">
         <div>
-          <h4 className="text-xl font-bold text-[#4C33FF] mb-2">
-            SMA KP 1 Paseh
-          </h4>
+          <h4 className="text-xl font-bold text-[#4C33FF] mb-2">SMA KP 1 Paseh</h4>
           <p className="max-w-xs">
-            SMA KP 1 Paseh adalah tempat mencetak generasi bangsa yang siap
-            bersaing di dunia internasional.
+            SMA KP 1 Paseh adalah tempat mencetak generasi bangsa yang siap bersaing di dunia
+            internasional.
           </p>
         </div>
         <div className="flex flex-col gap-2">
@@ -37,5 +35,5 @@ export function Footer() {
         © {new Date().getFullYear()} SMA KP 1 Paseh. All rights reserved.
       </div>
     </footer>
-  );
+  )
 }
