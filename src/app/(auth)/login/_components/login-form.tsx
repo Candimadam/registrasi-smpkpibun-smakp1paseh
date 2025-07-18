@@ -1,73 +1,97 @@
 'use client'
-import { cn } from '@/lib/utils'
+
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Mail, Lock, LogIn } from 'lucide-react'
 import Google from '@/components/svg/google-logo'
 import Link from 'next/link'
-import { authClient } from '@/lib/auth-client'
 
-export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
-  const signIn = async () => {
-    const data = await authClient.signIn.social({
-      provider: 'google',
-    })
+export function LoginForm() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Mock login - redirect to dashboard
+    window.location.href = '/dashboard'
   }
 
+  const handleGoogleLogin = async () => {}
+
   return (
-    <div className={cn('max-w-md flex flex-col gap-6', className)} {...props}>
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">Selamat datang kembali</CardTitle>
-          <CardDescription>Masuk dengan akun Apple atau Google Anda</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form>
-            <div className="grid gap-6">
-              <div className="flex flex-col gap-4">
-                <Button variant="outline" className="w-full" onClick={signIn}>
-                  <Google />
-                  Masuk dengan Google
-                </Button>
-              </div>
-              <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                <span className="bg-card text-muted-foreground relative z-10 px-2">
-                  Atau lanjutkan dengan
-                </span>
-              </div>
-              <div className="grid gap-6">
-                <div className="grid gap-3">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="nama@email.com" required />
-                </div>
-                <div className="grid gap-3">
-                  <div className="flex items-center">
-                    <Label htmlFor="password">Kata Sandi</Label>
-                    <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
-                      Lupa kata sandi?
-                    </a>
-                  </div>
-                  <Input id="password" type="password" required />
-                </div>
-                <Button type="submit" className="w-full">
-                  Masuk
-                </Button>
-              </div>
-              <div className="text-center text-sm">
-                Belum punya akun?{' '}
-                <Link href="/register" className="underline underline-offset-4">
-                  Daftar
-                </Link>
-              </div>
+    <Card className="w-full max-w-md shadow-lg">
+      <CardHeader className="text-center space-y-2">
+        <div className="mx-auto w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
+          <LogIn className="w-6 h-6 text-primary-foreground" />
+        </div>
+        <CardTitle className="text-2xl font-bold text-foreground">Masuk ke Akun</CardTitle>
+        <p className="text-muted-foreground">Masuk untuk mengakses sistem pendaftaran siswa</p>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <Button onClick={handleGoogleLogin} variant="outline" className="w-full h-12 text-base">
+          <Google />
+          Masuk dengan Google
+        </Button>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">Atau</span>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="nama@sekolah.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="pl-10"
+                required
+              />
             </div>
-          </form>
-        </CardContent>
-      </Card>
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        Dengan mengklik lanjutkan, Anda setuju dengan <a href="#">Syarat Layanan</a> dan{' '}
-        <a href="#">Kebijakan Privasi</a> kami.
-      </div>
-    </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Kata Sandi</Label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="pl-10"
+                required
+              />
+            </div>
+          </div>
+
+          <Button type="submit" className="w-full h-12 text-base">
+            Masuk
+          </Button>
+        </form>
+
+        <div className="text-center space-y-2">
+          <p className="text-sm text-muted-foreground">
+            Belum punya akun?{' '}
+            <Link href="/register" className="text-primary hover:underline font-medium">
+              Daftar sekarang
+            </Link>
+          </p>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
