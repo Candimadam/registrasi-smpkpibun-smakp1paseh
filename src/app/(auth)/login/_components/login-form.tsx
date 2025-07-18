@@ -1,3 +1,4 @@
+"use client"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -10,13 +11,19 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Google from "@/components/svg/google-logo"
-import Apple from "@/components/svg/apple-logo"
 import Link from "next/link"
+import { authClient } from "@/lib/auth-client"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const signIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google"
+    })
+  }
+
   return (
     <div className={cn("max-w-md flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -30,11 +37,7 @@ export function LoginForm({
           <form>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
-                <Button variant="outline" className="w-full">
-                  <Apple />
-                  Masuk dengan Apple
-                </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={signIn}>
                   <Google />
                   Masuk dengan Google
                 </Button>
