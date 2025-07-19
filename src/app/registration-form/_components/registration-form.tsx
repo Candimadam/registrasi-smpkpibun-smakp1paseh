@@ -290,7 +290,7 @@ export default function RegistrationForm() {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {requirements.map((requirement, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
+                <div key={requirement} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
                   <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">
                     {index + 1}
                   </span>
