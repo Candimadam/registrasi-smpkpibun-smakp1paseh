@@ -16,7 +16,8 @@ export function LoginForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Mock login - redirect to dashboard
-    window.location.href = '/dashboard'
+    const router = useRouter()
+    router.push('/dashboard')
   }
 
   const handleGoogleLogin = async () => {}
