@@ -1,88 +1,93 @@
-"use client"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Google from "@/components/svg/google-logo"
-import Link from "next/link"
-import { authClient } from "@/lib/auth-client"
+'use client'
 
-export function RegisterForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const signIn = async () => {
-    const data = await authClient.signIn.social({
-      provider: "google"
-    })
-  }
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Mail, Lock, User } from 'lucide-react'
+import Link from 'next/link'
+
+export function RegisterForm() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   return (
-    <div className={cn("max-w-md flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">Buat akun baru</CardTitle>
-          <CardDescription>
-            Daftar dengan akun Apple atau Google Anda
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form>
-            <div className="grid gap-6">
-              <div className="flex flex-col gap-4">
-                <Button variant="outline" className="w-full" onClick={signIn}>
-                  <Google />
-                  Daftar dengan Google
-                </Button>
-              </div>
-              <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                <span className="bg-card text-muted-foreground relative z-10 px-2">
-                  Atau daftar dengan email
-                </span>
-              </div>
-              <div className="grid gap-6">
-                <div className="grid gap-3">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="nama@email.com"
-                    required
-                  />
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="password">Kata Sandi</Label>
-                  <Input id="password" type="password" required />
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="confirm-password">Konfirmasi Kata Sandi</Label>
-                  <Input id="confirm-password" type="password" required />
-                </div>
-                <Button type="submit" className="w-full">
-                  Daftar
-                </Button>
-              </div>
-              <div className="text-center text-sm">
-                Sudah punya akun?{" "}
-                <Link href="/login" className="underline underline-offset-4">
-                  Masuk
-                </Link>
-              </div>
+    <Card className="w-full max-w-md shadow-lg">
+      <CardHeader className="text-center space-y-2">
+        <div className="mx-auto w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
+          <User className="w-6 h-6 text-primary-foreground" />
+        </div>
+        <CardTitle className="text-2xl font-bold text-foreground">Buat Akun Baru</CardTitle>
+        <p className="text-muted-foreground">
+          Daftarkan diri untuk mengakses sistem pendaftaran siswa
+        </p>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <form className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="nama@sekolah.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="pl-10"
+                required
+              />
             </div>
-          </form>
-        </CardContent>
-      </Card>
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        Dengan mendaftar, Anda setuju dengan <a href="#">Syarat Layanan</a>{" "}
-        dan <a href="#">Kebijakan Privasi</a> kami.
-      </div>
-    </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Kata Sandi</Label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="pl-10"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">Konfirmasi Kata Sandi</Label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="pl-10"
+                required
+              />
+            </div>
+          </div>
+
+          <Button type="submit" className="w-full h-12 text-base">
+            Daftar Akun
+          </Button>
+        </form>
+
+        <div className="text-center space-y-2">
+          <p className="text-sm text-muted-foreground">
+            Sudah punya akun?{' '}
+            <Link href="/login" className="text-primary hover:underline font-medium">
+              Masuk di sini
+            </Link>
+          </p>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
