@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label'
 import { Mail, Lock, LogIn } from 'lucide-react'
 import Google from '@/components/svg/google-logo'
 import Link from 'next/link'
+import { authClient } from '@/lib/auth-client'
+import { toast } from 'sonner'
 
 export function LoginForm() {
   const [email, setEmail] = useState('')
@@ -15,12 +17,21 @@ export function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Mock login - redirect to dashboard
-    const router = useRouter()
-    router.push('/dashboard')
   }
 
-  const handleGoogleLogin = async () => {}
+  const handleGoogleLogin = async () => {
+    const { error } = await authClient.signIn.social({
+      provider: 'google',
+      callbackURL: '/registration-form',
+    })
+
+    if (error) {
+      toast.error('Gagal masuk dengan Google. Silakan coba lagi.', {
+        description: error.message,
+      })
+      return
+    }
+  }
 
   return (
     <Card className="w-full max-w-md shadow-lg">

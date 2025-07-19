@@ -19,6 +19,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import Link from 'next/link'
 
 export function LandingSection() {
   const timeline = [
@@ -164,10 +165,12 @@ export function LandingSection() {
 
             {/* CTA Buttons */}
             <div className="mt-8 space-y-4">
-              <Button variant="cta" size="lg" className="w-full group">
-                <FileText className="h-5 w-5 mr-2 group-hover:animate-pulse" />
-                Daftar Online Sekarang
-                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              <Button variant="cta" size="lg" className="w-full group" asChild>
+                <Link href="/registration-form">
+                  <FileText className="h-5 w-5 mr-2 group-hover:animate-pulse" />
+                  Daftar Online Sekarang
+                  <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </Button>
               <div className="grid grid-cols-2 gap-4">
                 <Button variant="outline" size="lg">
@@ -248,9 +251,12 @@ export function LandingSection() {
               variant="secondary"
               size="lg"
               className="bg-white text-blue-500 hover:bg-white/90 group"
+              asChild
             >
-              Mulai Pendaftaran
-              <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              <Link href="/registration-form">
+                Mulai Pendaftaran
+                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
         </div>
