@@ -35,7 +35,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="min-h-screen bg-gradient-to-br from-primary/5 to-accent/10 py-12">
+          <main className="bg-gradient-to-br from-primary/5 to-accent/10 min-h-[calc(100vh-56px)] p-4 w-full flex items-center justify-center">
             {children}
           </main>
           <Toaster />

@@ -14,7 +14,7 @@ export function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState('')
 
   return (
-    <Card className="w-full max-w-md shadow-lg">
+    <Card className="max-w-md w-full shadow-lg">
       <CardHeader className="text-center space-y-2">
         <div className="mx-auto w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
           <User className="w-6 h-6 text-primary-foreground" />
