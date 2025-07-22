@@ -23,8 +23,8 @@ import {
 import { useState } from 'react'
 
 const loginSchema = z.object({
-  email: z.email('Email tidak valid'),
-  password: z.string().min(6, 'Kata sandi harus minimal 6 karakter'),
+  email: z.email('Email tidak valid').min(1, 'Email tidak boleh kosong'),
+  password: z.string().min(1, 'Kata sandi tidak boleh kosong'),
 })
 
 export function LoginForm() {
@@ -47,7 +47,7 @@ export function LoginForm() {
     })
 
     if (error) {
-      toast.error('Gagal masuk dengan email dan kata sandi. Silakan coba lagi.', {
+      toast.error('Gagal masuk ke akun. Silakan coba lagi.', {
         description: error.message,
       })
       return
@@ -68,7 +68,6 @@ export function LoginForm() {
       toast.error('Gagal masuk dengan Google. Silakan coba lagi.', {
         description: error.message,
       })
-      return
     }
   }
 
@@ -104,9 +103,6 @@ export function LoginForm() {
                   <FormControl>
                     <Input placeholder="contoh@gmail.com" {...field} />
                   </FormControl>
-                  <FormDescription>
-                    Gunakan email aktif untuk verifikasi pendaftaran.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
