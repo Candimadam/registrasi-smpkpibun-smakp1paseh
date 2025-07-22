@@ -52,7 +52,7 @@ export const auth = betterAuth({
       if (path.startsWith('/sign-in') && response.body?.code === 'INVALID_EMAIL_OR_PASSWORD') {
         throw new APIError('UNAUTHORIZED', {
           ...response.body,
-          message: 'Email atau kata sandi salah',
+          message: 'Email atau kata sandi salah, login dengan google atau coba lagi.',
         })
       }
       if (path.startsWith('/sign-in') && response.body?.code === 'EMAIL_NOT_VERIFIED') {
