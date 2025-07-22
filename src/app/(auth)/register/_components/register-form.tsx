@@ -62,14 +62,14 @@ export function RegisterForm() {
     })
 
     if (error) {
-      toast.error('Gagal mendaftar akun. Silakan coba lagi.', {
+      toast.error('Gagal mendaftar akun', {
         description: error.message,
       })
       return
     }
 
     if (data) {
-      toast.info(`Akun berhasil dibuat! Verifikasi email Anda untuk melanjutkan.`, {
+      toast.info('Akun berhasil dibuat! Verifikasi email Anda untuk melanjutkan', {
         description: 'Silakan cek email Anda untuk verifikasi.',
       })
       router.push('/login')

@@ -47,7 +47,7 @@ export function LoginForm() {
     })
 
     if (error) {
-      toast.error('Gagal masuk ke akun. Silakan coba lagi.', {
+      toast.error('Gagal masuk ke akun', {
         description: error.message,
       })
       return
@@ -65,7 +65,7 @@ export function LoginForm() {
     })
 
     if (error) {
-      toast.error('Gagal masuk dengan Google. Silakan coba lagi.', {
+      toast.error('Gagal masuk dengan Google', {
         description: error.message,
       })
     }
