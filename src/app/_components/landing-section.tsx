@@ -19,6 +19,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import Link from 'next/link'
 
 export function LandingSection() {
   const timeline = [
@@ -67,7 +68,7 @@ export function LandingSection() {
 
   return (
     <section id="penerimaan">
-      <div className="container mx-auto container-padding">
+      <div className="container mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0 mb-4 text-foreground">
@@ -108,7 +109,7 @@ export function LandingSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Timeline */}
           <div>
-            <Card className="card-soft-shadow">
+            <Card className="shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Calendar className="h-5 w-5 mr-2 text-blue-500" />
@@ -164,10 +165,12 @@ export function LandingSection() {
 
             {/* CTA Buttons */}
             <div className="mt-8 space-y-4">
-              <Button variant="cta" size="lg" className="w-full group">
-                <FileText className="h-5 w-5 mr-2 group-hover:animate-pulse" />
-                Daftar Online Sekarang
-                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              <Button variant="cta" size="lg" className="w-full group" asChild>
+                <Link href="/registration-form">
+                  <FileText className="h-5 w-5 mr-2 group-hover:animate-pulse" />
+                  Daftar Online Sekarang
+                  <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </Button>
               <div className="grid grid-cols-2 gap-4">
                 <Button variant="outline" size="lg">
@@ -185,7 +188,7 @@ export function LandingSection() {
           {/* Requirements & Fees */}
           <div className="space-y-8">
             {/* Requirements */}
-            <Card className="card-soft-shadow">
+            <Card className="shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <FileText className="h-5 w-5 mr-2 text-blue-500" />
@@ -205,7 +208,7 @@ export function LandingSection() {
             </Card>
 
             {/* Fees */}
-            <Card className="card-soft-shadow">
+            <Card className="shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <DollarSign className="h-5 w-5 mr-2 text-blue-500" />
@@ -238,7 +241,7 @@ export function LandingSection() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-primary to-primary/80 rounded-2xl p-8 text-white">
+          <div className="bg-gradient-to-r from-blue-900 to-blue-500/80 rounded-2xl p-8 text-white">
             <h3 className="text-2xl font-bold mb-4">Siap Menjadi Bagian dari SMA Merdeka?</h3>
             <p className="mb-6 text-white/90">
               Jangan sampai kehabisan kuota! Daftar sekarang dan raih masa depan gemilang bersama
@@ -248,9 +251,12 @@ export function LandingSection() {
               variant="secondary"
               size="lg"
               className="bg-white text-blue-500 hover:bg-white/90 group"
+              asChild
             >
-              Mulai Pendaftaran
-              <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              <Link href="/registration-form">
+                Mulai Pendaftaran
+                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
         </div>

@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: sma-1kp-paseh
+      POSTGRES_DB: registrasi-smpkpibun-smakp1paseh
     ports:
       - '5432:5432'
     volumes:
