@@ -18,7 +18,8 @@ export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
   if (session && alreadyAuthenticatedRoute.includes(path)) {
-    // If the user is authenticated and tries to access an already authenticated path, redirect to the
+    // If the user is authenticated and tries to access an already authenticated path (e.g., /login or /register),
+    // redirect them to the /registration-form page to avoid unnecessary access to these routes.
     return NextResponse.redirect(new URL('/registration-form', request.url))
   }
 
