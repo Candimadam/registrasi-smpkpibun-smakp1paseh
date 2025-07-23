@@ -1,6 +1,4 @@
-import { render } from '@react-email/components'
 import nodemailer from 'nodemailer'
-import { ReactNode } from 'react'
 
 export const emailTransporter = nodemailer.createTransport({
   service: 'gmail',

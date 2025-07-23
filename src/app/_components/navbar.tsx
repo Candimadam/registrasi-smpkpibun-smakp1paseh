@@ -7,12 +7,7 @@ import { LogInIcon } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Navbar() {
-  const {
-    data: session,
-    isPending, //loading state
-    error, //error object
-    refetch, //refetch the session
-  } = authClient.useSession()
+  const { data: session } = authClient.useSession()
 
   return (
     <nav className="sticky top-0 flex items-center justify-between py-2 px-6 bg-background h-14">

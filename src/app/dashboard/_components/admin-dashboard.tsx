@@ -111,7 +111,7 @@ export default function AdminDashboard() {
     )
   }
 
-  const getCompletionRate = (documents: any) => {
+  const getCompletionRate = (documents: Record<string, boolean>) => {
     const total = Object.keys(documents).length
     const completed = Object.values(documents).filter(Boolean).length
     return Math.round((completed / total) * 100)

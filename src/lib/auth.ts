@@ -16,7 +16,7 @@ export const auth = betterAuth({
     requireEmailVerification: true,
   },
   emailVerification: {
-    sendVerificationEmail: async ({ user, url, token }, request) => {
+    sendVerificationEmail: async ({ user, url }) => {
       const html = await pretty(await render(React.createElement(EmailVerification, { user, url })))
       await sendEmail('Verifikasi Email Anda', user.email, html)
     },
