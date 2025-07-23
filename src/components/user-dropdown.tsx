@@ -144,7 +144,7 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
             }}
           >
             <DoorOpenIcon className="mr-2 h-4 w-4" />
-            Log out
+            Keluar
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
