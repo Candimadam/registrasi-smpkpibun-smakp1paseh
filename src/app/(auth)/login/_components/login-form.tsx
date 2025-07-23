@@ -47,9 +47,7 @@ export function LoginForm() {
     })
 
     if (error) {
-      toast.error('Gagal masuk ke akun', {
-        description: error.message,
-      })
+      toast.error(error.message)
       return
     }
 
@@ -65,9 +63,7 @@ export function LoginForm() {
     })
 
     if (error) {
-      toast.error('Gagal masuk dengan Google', {
-        description: error.message,
-      })
+      toast.error(error.message)
     }
   }
 
@@ -81,7 +77,12 @@ export function LoginForm() {
         <p className="text-muted-foreground">Masuk untuk mengakses sistem pendaftaran siswa</p>
       </CardHeader>
       <CardContent className="space-y-6">
-        <Button onClick={handleGoogleLogin} variant="outline" className="w-full h-12 text-base">
+        <Button
+          type="button"
+          onClick={handleGoogleLogin}
+          variant="outline"
+          className="w-full h-12 text-base"
+        >
           <Google />
           Masuk dengan Google
         </Button>

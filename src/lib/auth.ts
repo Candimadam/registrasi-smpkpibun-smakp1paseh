@@ -1,7 +1,11 @@
 import { betterAuth } from 'better-auth'
 import { createAuthMiddleware, APIError } from 'better-auth/api'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
-import { prisma } from './prisma'
+import { prisma } from './db'
+import { sendEmail } from './email'
+import { pretty, render } from '@react-email/components'
+import React from 'react'
+import EmailVerification from '@/emails/email-verification'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -13,21 +17,12 @@ export const auth = betterAuth({
   },
   emailVerification: {
     sendVerificationEmail: async ({ user, url, token }, request) => {
-      // TODO: Implement your email sending logic here
-      console.info('Sending verification email', {
-        user,
-        url,
-        token,
-        request,
-      })
+      const html = await pretty(await render(React.createElement(EmailVerification, { user, url })))
+      await sendEmail('Verifikasi Email Anda', user.email, html)
     },
     autoSignInAfterVerification: true,
   },
   socialProviders: {
-    // github: {
-    //   clientId: process.env.GITHUB_CLIENT_ID as string,
-    //   clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-    // },
     google: {
       prompt: 'select_account',
       clientId: process.env.GOOGLE_CLIENT_ID as string,
