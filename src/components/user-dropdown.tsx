@@ -22,16 +22,18 @@ import {
   LayoutDashboardIcon,
   MonitorIcon,
   MoonIcon,
+  ShieldIcon,
   SunIcon,
   SunMoonIcon,
 } from 'lucide-react'
-import { User } from 'better-auth'
-import { authClient } from '@/lib/auth-client'
+import { authClient, Session } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
+import { isAdmin } from '@/lib/validate'
+import { Badge } from './ui/badge'
 
 interface UserDropdownProps {
-  user: User
+  user: Session['user']
 }
 
 export const UserDropdown = ({ user }: UserDropdownProps) => {
@@ -44,7 +46,7 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
         <UserAvatar
           imageUrl={user.image ?? undefined}
           fallbackText={user.name}
-          className="h-8 w-8"
+          className="size-10"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -57,10 +59,13 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
             <UserAvatar
               imageUrl={user.image ?? undefined}
               fallbackText={user.name}
-              className="h-8 w-8"
+              className="size-10"
             />
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-medium">{user.name}</span>
+              <div className="flex items-center">
+                <span className="truncate font-medium">{user.name}</span>
+                {isAdmin(user.role) && <ShieldIcon className="ml-2 h-4 w-4 text-blue-500" />}
+              </div>
               <span className="text-muted-foreground truncate text-xs">{user.email}</span>
             </div>
           </div>
@@ -75,10 +80,12 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
             <FilePenLineIcon className="mr-2 h-4 w-4" />
             Formulir Pendaftaran
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => router.push('/dashboard')}>
-            <LayoutDashboardIcon className="mr-2 h-4 w-4" />
-            Dashboard
-          </DropdownMenuItem>
+          {isAdmin(user.role) && (
+            <DropdownMenuItem onSelect={() => router.push('/dashboard')}>
+              <LayoutDashboardIcon className="mr-2 h-4 w-4" />
+              Dashboard
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
