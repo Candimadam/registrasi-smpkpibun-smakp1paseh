@@ -1,13 +1,13 @@
 import { betterAuth } from 'better-auth'
 import { createAuthMiddleware, APIError } from 'better-auth/api'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
-import { prisma } from '../../lib/db'
-import { sendVerificationEmail } from '../../lib/email'
+import { db } from '@/server/lib/db'
+import { sendVerificationEmail } from '@/lib/email'
 import { env } from '@/env/server'
 import { admin } from 'better-auth/plugins'
 
 export const auth = betterAuth({
-  database: prismaAdapter(prisma, {
+  database: prismaAdapter(db, {
     provider: 'postgresql',
   }),
   baseURL: env.NODE_ENV === 'production' ? env.COOLIFY_URL : env.BETTER_AUTH_URL,

@@ -2,6 +2,7 @@ import { betterFetch } from '@better-fetch/fetch'
 import { NextRequest, NextResponse } from 'next/server'
 import { Session } from './server/auth/auth'
 import { env } from './env/server'
+import { isAdminServer, normalizePath } from './server/lib/helper'
 
 // Use Sets for faster lookup
 const routeGroups = {
@@ -9,16 +10,6 @@ const routeGroups = {
   user: new Set(['/registration-form', '/registration-status']),
   admin: new Set(['/dashboard']),
   public: new Set(['/']),
-}
-
-// Utility to normalize path
-function normalizePath(path: string) {
-  return path.endsWith('/') && path.length > 1 ? path.slice(0, -1) : path
-}
-
-// Helper to check admin role
-function isAdmin(session: Session) {
-  return session.user.role === 'admin' || session.user.id === env.ADMIN_USER_ID
 }
 
 export async function middleware(request: NextRequest) {
@@ -52,17 +43,17 @@ export async function middleware(request: NextRequest) {
   // Auth route redirect
   if (routeGroups.auth.has(normalizedPath)) {
     return NextResponse.redirect(
-      new URL(isAdmin(session) ? '/dashboard' : '/registration-form', request.url)
+      new URL(isAdminServer(session) ? '/dashboard' : '/registration-form', request.url)
     )
   }
 
   // User route, but admin
-  if (routeGroups.user.has(normalizedPath) && isAdmin(session)) {
+  if (routeGroups.user.has(normalizedPath) && isAdminServer(session)) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
   // Admin route, but not admin
-  if (routeGroups.admin.has(normalizedPath) && !isAdmin(session)) {
+  if (routeGroups.admin.has(normalizedPath) && !isAdminServer(session)) {
     return NextResponse.redirect(new URL('/unauthorized', request.url))
   }
 

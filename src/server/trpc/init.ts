@@ -1,22 +1,84 @@
-import { initTRPC } from '@trpc/server'
+import { initTRPC, TRPCError } from '@trpc/server'
 import { cache } from 'react'
 import superjson from 'superjson'
+import { auth } from '../auth/auth'
+import { headers } from 'next/headers'
+import { db } from '@/server/lib/db'
+import { ZodError } from 'zod'
+import { isAdminServer } from '../lib/helper'
 
-export const createTRPCContext = cache(async () => {
-  /**
-   * @see: https://trpc.io/docs/server/context
-   */
-  return { userId: 'user_123' }
+export const createTRPCContext = cache(async (opts: { headers: Headers }) => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  })
+
+  return {
+    db,
+    session,
+    ...opts,
+  }
 })
 
-const t = initTRPC.create({
-  /**
-   * @see https://trpc.io/docs/server/data-transformers
-   */
+const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
+      },
+    }
+  },
 })
 
 // Base router and procedure helpers
 export const createTRPCRouter = t.router
 export const createCallerFactory = t.createCallerFactory
-export const baseProcedure = t.procedure
+
+/**
+ * Middleware for timing procedure execution and adding an artificial delay in development.
+ *
+ * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
+ * network latency that would occur in production but not in local development.
+ */
+const timingMiddleware = t.middleware(async ({ next, path }) => {
+  const start = Date.now()
+
+  if (t._config.isDev) {
+    // artificial delay in dev
+    const waitMs = Math.floor(Math.random() * 400) + 100
+    await new Promise((resolve) => setTimeout(resolve, waitMs))
+  }
+
+  const result = await next()
+
+  const end = Date.now()
+  console.log(`[TRPC] ${path} took ${end - start}ms to execute`)
+
+  return result
+})
+
+export const publicProcedure = t.procedure.use(timingMiddleware)
+export const protectedProcedure = t.procedure.use(timingMiddleware).use(({ ctx, next }) => {
+  if (!ctx.session?.user) {
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Kamu tidak memiliki akses' })
+  }
+
+  return next({
+    ctx: {
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  })
+})
+export const adminProcedure = t.procedure.use(timingMiddleware).use(({ ctx, next }) => {
+  if (!ctx.session?.user || !isAdminServer(ctx.session)) {
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Kamu tidak memiliki akses' })
+  }
+
+  return next({
+    ctx: {
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  })
+})

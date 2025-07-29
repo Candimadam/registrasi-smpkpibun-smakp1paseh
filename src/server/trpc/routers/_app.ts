@@ -1,16 +1,42 @@
 import { z } from 'zod'
-import { baseProcedure, createTRPCRouter } from '../init'
+import { publicProcedure, createTRPCRouter, protectedProcedure } from '../init'
 
 export const appRouter = createTRPCRouter({
-  hello: baseProcedure
+  hello: publicProcedure
     .input(
       z.object({
         text: z.string(),
       })
     )
-    .query((opts) => {
+    .query(({ input }) => {
       return {
-        greeting: `hello ${opts.input.text}`,
+        greeting: `hello ${input.text}`,
+      }
+    }),
+
+  testProtected: protectedProcedure
+    .input(
+      z.object({
+        text: z.string(),
+      })
+    )
+    .query(({ input }) => {
+      return {
+        greeting: `protected hello ${input.text}`,
+      }
+    }),
+  testAdmin: protectedProcedure
+    .input(
+      z.object({
+        text: z.string(),
+      })
+    )
+    .use(({ ctx, next }) => {
+      return next()
+    })
+    .query(({ input }) => {
+      return {
+        greeting: `admin hello ${input.text}`,
       }
     }),
 })
