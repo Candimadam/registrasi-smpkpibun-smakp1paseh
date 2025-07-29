@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { publicProcedure, createTRPCRouter, protectedProcedure } from '../init'
+import { publicProcedure, createTRPCRouter, protectedProcedure, adminProcedure } from '../init'
 
 export const appRouter = createTRPCRouter({
   hello: publicProcedure
@@ -25,7 +25,7 @@ export const appRouter = createTRPCRouter({
         greeting: `protected hello ${input.text}`,
       }
     }),
-  testAdmin: protectedProcedure
+  testAdmin: adminProcedure
     .input(
       z.object({
         text: z.string(),
