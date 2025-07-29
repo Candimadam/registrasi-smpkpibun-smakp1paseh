@@ -17,4 +17,5 @@ export const env = createEnv({
   experimental__runtimeEnv: process.env,
   isServer: true,
   extends: [coolify()],
+  emptyStringAsUndefined: true,
 })

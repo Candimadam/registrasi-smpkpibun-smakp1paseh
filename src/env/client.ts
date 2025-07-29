@@ -1,6 +1,5 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
-import { coolify } from '@t3-oss/env-core/presets-zod'
 
 export const env = createEnv({
   client: {
@@ -10,5 +9,5 @@ export const env = createEnv({
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },
   isServer: false,
-  extends: [coolify()],
+  emptyStringAsUndefined: true,
 })
