@@ -4,16 +4,19 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const alreadyAuthenticatedRoute = ['/login', '/register']
 const protectedRoute = ['/registration-form', '/registration-status', '/dashboard']
-
-function isAlreadyAuthenticatedRoute(path: string) {
-  return alreadyAuthenticatedRoute.includes(path)
-}
-
-function isProtectedRoute(path: string) {
-  return protectedRoute.includes(path)
-}
+const publicRoute = ['/']
 
 export async function middleware(request: NextRequest) {
+  const pathName = request.nextUrl.pathname
+
+  const isAlreadyAuthenticatedRoute = alreadyAuthenticatedRoute.includes(pathName)
+  const isProtectedRoute = protectedRoute.includes(pathName)
+  const isPublicRoute = publicRoute.includes(pathName)
+
+  if (isPublicRoute) {
+    return NextResponse.next()
+  }
+
   const { data: session } = await betterFetch<typeof auth.$Infer.Session>('/api/auth/get-session', {
     baseURL: request.nextUrl.origin,
     headers: {
@@ -21,15 +24,17 @@ export async function middleware(request: NextRequest) {
     },
   })
 
-  const path = request.nextUrl.pathname
+  if (!session) {
+    if (isProtectedRoute) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
+  }
 
-  if (session && isAlreadyAuthenticatedRoute(path)) {
+  if (isAlreadyAuthenticatedRoute) {
     return NextResponse.redirect(new URL('/registration-form', request.url))
   }
 
-  if (!session && isProtectedRoute(path)) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
+  // TODO: admin route protection
 
   return NextResponse.next()
 }
