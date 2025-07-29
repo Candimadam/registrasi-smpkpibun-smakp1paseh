@@ -4,6 +4,7 @@ import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import Navbar from './_components/navbar'
 import { ThemeProvider } from '@/components/theme-provider'
+import { TRPCReactProvider } from '@/server/trpc/client'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,18 +29,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <main className="bg-gradient-to-br from-primary/5 to-accent/10 min-h-[calc(100vh-56px)] p-4 w-full flex items-center justify-center">
-            {children}
-          </main>
-          <Toaster />
-        </ThemeProvider>
+        <TRPCReactProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar />
+            <main className="bg-gradient-to-br from-primary/5 to-accent/10 min-h-[calc(100vh-56px)] p-4 w-full flex items-center justify-center">
+              {children}
+            </main>
+            <Toaster />
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   )
