@@ -26,7 +26,7 @@ import {
   SunMoonIcon,
   WrenchIcon,
 } from 'lucide-react'
-import { authClient, Session } from '@/lib/auth-client'
+import { authClient, Session } from '@/server/auth/auth-client'
 import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { isAdmin } from '@/lib/validate'

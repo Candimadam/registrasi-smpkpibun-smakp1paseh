@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { UserDropdown } from '@/components/user-dropdown'
-import { authClient } from '@/lib/auth-client'
+import { authClient } from '@/server/auth/auth-client'
 import { LogInIcon } from 'lucide-react'
 import Link from 'next/link'
 

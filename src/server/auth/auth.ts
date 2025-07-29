@@ -1,8 +1,8 @@
 import { betterAuth } from 'better-auth'
 import { createAuthMiddleware, APIError } from 'better-auth/api'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
-import { prisma } from './db'
-import { sendVerificationEmail } from './email'
+import { prisma } from '../../lib/db'
+import { sendVerificationEmail } from '../../lib/email'
 import { env } from '@/env/server'
 import { admin } from 'better-auth/plugins'
 

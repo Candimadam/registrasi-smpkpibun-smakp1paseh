@@ -1,6 +1,6 @@
 import { betterFetch } from '@better-fetch/fetch'
 import { NextRequest, NextResponse } from 'next/server'
-import { Session } from './lib/auth'
+import { Session } from './server/auth/auth'
 import { env } from './env/server'
 
 // Use Sets for faster lookup

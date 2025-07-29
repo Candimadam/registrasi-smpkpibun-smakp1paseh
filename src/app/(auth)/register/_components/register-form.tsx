@@ -19,7 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { authClient } from '@/lib/auth-client'
+import { authClient } from '@/server/auth/auth-client'
 import { useRouter } from 'next/navigation'
 
 const registerSchema = z

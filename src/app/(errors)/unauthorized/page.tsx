@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { authClient } from '@/lib/auth-client'
+import { authClient } from '@/server/auth/auth-client'
 import { ShieldX, Home, LogIn, LogOutIcon } from 'lucide-react'
 import Link from 'next/link'
 
