@@ -1,27 +1,21 @@
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
+import { render } from '@react-email/render'
+import VerificationEmailTemplate from '@/components/emails/verification-email'
+import { env } from '@/env/server'
 
-export const emailTransporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    type: 'OAuth2',
-    user: process.env.GOOGLE_EMAIL,
-    clientId: process.env.GOOGLE_EMAIL_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_EMAIL_CLIENT_SECRET,
-    refreshToken: process.env.GOOGLE_EMAIL_REFRESH_TOKEN,
-  },
-})
+export const resend = new Resend(env.RESEND_API_KEY)
 
-export async function sendEmail(subject: string, to: string, html: string) {
-  const info = await emailTransporter.sendMail({
-    from: process.env.GOOGLE_EMAIL,
-    to,
-    subject,
-    html,
-  })
-
-  console.info('Email sent:', {
-    to,
-    subject,
-    messageId: info.messageId,
+export const sendVerificationEmail = async ({
+  email,
+  verificationUrl,
+}: {
+  email: string
+  verificationUrl: string
+}) => {
+  return await resend.emails.send({
+    from: env.RESEND_EMAIL_FROM,
+    to: [email],
+    subject: 'Verifikasi Email Anda',
+    html: await render(VerificationEmailTemplate({ inviteLink: verificationUrl })),
   })
 }

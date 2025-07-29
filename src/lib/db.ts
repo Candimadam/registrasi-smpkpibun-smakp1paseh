@@ -1,3 +1,4 @@
+import { env } from '@/env/server'
 import { PrismaClient } from '@/generated/prisma'
 import { withAccelerate } from '@prisma/extension-accelerate'
 
@@ -7,4 +8,4 @@ const globalForPrisma = global as unknown as {
 
 export const prisma = globalForPrisma.prisma || new PrismaClient().$extends(withAccelerate())
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+if (env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma

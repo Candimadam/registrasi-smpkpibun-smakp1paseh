@@ -2,41 +2,41 @@ import { betterAuth } from 'better-auth'
 import { createAuthMiddleware, APIError } from 'better-auth/api'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { prisma } from './db'
-import { sendEmail } from './email'
-import { pretty, render } from '@react-email/components'
-import React from 'react'
-import EmailVerification from '@/emails/email-verification'
+import { sendVerificationEmail } from './email'
+import { env } from '@/env/server'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
+  baseURL: env.NODE_ENV === 'production' ? env.COOLIFY_URL : env.BETTER_AUTH_URL,
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
   },
   emailVerification: {
     sendVerificationEmail: async ({ user, url }) => {
-      const html = await pretty(await render(React.createElement(EmailVerification, { user, url })))
-      await sendEmail('Verifikasi Email Anda', user.email, html)
+      await sendVerificationEmail({ email: user.email, verificationUrl: url })
     },
     autoSignInAfterVerification: true,
   },
   socialProviders: {
     google: {
       prompt: 'select_account',
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: env.GOOGLE_CLIENT_ID as string,
+      clientSecret: env.GOOGLE_CLIENT_SECRET as string,
     },
   },
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
       const path = ctx.path
       const response = ctx.context.returned as APIError
-      console.info('Auth middleware response', {
-        path,
-        response,
-      })
+
+      // NOTE: Uncomment the following line to log the response for debugging purposes
+      // console.info('Auth middleware response', {
+      //   path,
+      //   response,
+      // })
 
       if (path.startsWith('/sign-up') && response.body?.code === 'USER_ALREADY_EXISTS') {
         throw new APIError('BAD_REQUEST', {
