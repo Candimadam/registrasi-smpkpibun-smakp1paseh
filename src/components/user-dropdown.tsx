@@ -31,6 +31,7 @@ import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { isAdmin } from '@/lib/validate'
 import { Badge } from './ui/badge'
+import { generateFallbackProfile } from '@/lib/string'
 
 interface UserDropdownProps {
   user: Session['user']
@@ -45,7 +46,7 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
       <DropdownMenuTrigger>
         <UserAvatar
           imageUrl={user.image ?? undefined}
-          fallbackText={user.name}
+          fallbackText={generateFallbackProfile(user.name)}
           className="size-10"
         />
       </DropdownMenuTrigger>
@@ -58,7 +59,7 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <UserAvatar
               imageUrl={user.image ?? undefined}
-              fallbackText={user.name}
+              fallbackText={generateFallbackProfile(user.name)}
               className="size-10"
             />
             <div className="grid flex-1 text-left text-sm leading-tight">
