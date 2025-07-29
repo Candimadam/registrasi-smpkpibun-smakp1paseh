@@ -1,6 +1,7 @@
 import { betterFetch } from '@better-fetch/fetch'
 import { NextRequest, NextResponse } from 'next/server'
 import { Session } from './lib/auth'
+import { env } from './env/server'
 
 // Use Sets for faster lookup
 const routeGroups = {
@@ -17,7 +18,7 @@ function normalizePath(path: string) {
 
 // Helper to check admin role
 function isAdmin(session: Session) {
-  return session.user.role === 'admin'
+  return session.user.role === 'admin' || session.user.id === env.ADMIN_USER_ID
 }
 
 export async function middleware(request: NextRequest) {
