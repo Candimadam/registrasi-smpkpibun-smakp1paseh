@@ -22,24 +22,25 @@ import {
   LayoutDashboardIcon,
   MonitorIcon,
   MoonIcon,
-  ShieldIcon,
   SunIcon,
   SunMoonIcon,
+  WrenchIcon,
 } from 'lucide-react'
 import { authClient, Session } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { isAdmin } from '@/lib/validate'
-import { Badge } from './ui/badge'
 import { generateFallbackProfile } from '@/lib/string'
 
 interface UserDropdownProps {
-  user: Session['user']
+  session: Session
 }
 
-export const UserDropdown = ({ user }: UserDropdownProps) => {
+export const UserDropdown = ({ session }: UserDropdownProps) => {
   const router = useRouter()
   const { setTheme, theme } = useTheme()
+
+  const { user } = session
 
   return (
     <DropdownMenu>
@@ -63,9 +64,9 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
               className="size-10"
             />
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <div className="flex items-center">
+              <div className="flex items-center gap-1">
                 <span className="truncate font-medium">{user.name}</span>
-                {isAdmin(user.role) && <ShieldIcon className="ml-2 h-4 w-4 text-blue-500" />}
+                {isAdmin(session) && <WrenchIcon className="size-4 text-blue-500" />}
               </div>
               <span className="text-muted-foreground truncate text-xs">{user.email}</span>
             </div>
@@ -73,15 +74,18 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onSelect={() => router.push('/registration-status')}>
-            <FileUserIcon className="mr-2 h-4 w-4" />
-            Status Registrasi
-          </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => router.push('/registration-form')}>
-            <FilePenLineIcon className="mr-2 h-4 w-4" />
-            Formulir Pendaftaran
-          </DropdownMenuItem>
-          {isAdmin(user.role) && (
+          {!isAdmin(session) ? (
+            <>
+              <DropdownMenuItem onSelect={() => router.push('/registration-status')}>
+                <FileUserIcon className="mr-2 h-4 w-4" />
+                Status Registrasi
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => router.push('/registration-form')}>
+                <FilePenLineIcon className="mr-2 h-4 w-4" />
+                Formulir Pendaftaran
+              </DropdownMenuItem>
+            </>
+          ) : (
             <DropdownMenuItem onSelect={() => router.push('/dashboard')}>
               <LayoutDashboardIcon className="mr-2 h-4 w-4" />
               Dashboard

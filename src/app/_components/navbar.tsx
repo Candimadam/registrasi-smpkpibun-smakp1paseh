@@ -18,7 +18,7 @@ export default function Navbar() {
       {isPending ? (
         <Skeleton className="size-10 rounded-full" />
       ) : session ? (
-        <UserDropdown user={session.user} />
+        <UserDropdown session={session} />
       ) : (
         <Button asChild variant="outline">
           <Link href="/login">

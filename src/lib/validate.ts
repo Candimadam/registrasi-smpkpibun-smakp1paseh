@@ -1,3 +1,5 @@
-export function isAdmin(role?: string | null): boolean {
-  return role === 'admin'
+import { Session } from './auth-client'
+
+export function isAdmin(session: Session): boolean {
+  return session.user.role === 'admin'
 }
