@@ -4,6 +4,7 @@ import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { prisma } from './db'
 import { sendVerificationEmail } from './email'
 import { env } from '@/env/server'
+import { admin } from 'better-auth/plugins'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -27,6 +28,7 @@ export const auth = betterAuth({
       clientSecret: env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+  plugins: [admin()],
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
       const path = ctx.path
