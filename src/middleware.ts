@@ -2,29 +2,32 @@ import { betterFetch } from '@better-fetch/fetch'
 import type { auth } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
 
-type Session = typeof auth.$Infer.Session
-
 const alreadyAuthenticatedRoute = ['/login', '/register']
 const protectedRoute = ['/registration-form', '/registration-status', '/dashboard']
 
+function isAlreadyAuthenticatedRoute(path: string) {
+  return alreadyAuthenticatedRoute.includes(path)
+}
+
+function isProtectedRoute(path: string) {
+  return protectedRoute.includes(path)
+}
+
 export async function middleware(request: NextRequest) {
-  const { data: session } = await betterFetch<Session>('/api/auth/get-session', {
+  const { data: session } = await betterFetch<typeof auth.$Infer.Session>('/api/auth/get-session', {
     baseURL: request.nextUrl.origin,
     headers: {
-      cookie: request.headers.get('cookie') || '', // Forward the cookies from the request
+      cookie: request.headers.get('cookie') || '',
     },
   })
 
   const path = request.nextUrl.pathname
 
-  if (session && alreadyAuthenticatedRoute.includes(path)) {
-    // If the user is authenticated and tries to access an already authenticated path (e.g., /login or /register),
-    // redirect them to the /registration-form page to avoid unnecessary access to these routes.
+  if (session && isAlreadyAuthenticatedRoute(path)) {
     return NextResponse.redirect(new URL('/registration-form', request.url))
   }
 
-  if (!session && protectedRoute.includes(path)) {
-    // If the user is not authenticated and tries to access an authenticated path, redirect to login
+  if (!session && isProtectedRoute(path)) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
