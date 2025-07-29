@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "check": "next lint && tsc --noEmit",
     "email": "email dev --dir src/components/emails",
     "docker:compose:up": "docker compose up -d",
     "docker:compose:down": "docker compose down",

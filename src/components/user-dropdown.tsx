@@ -24,27 +24,31 @@ import {
   MoonIcon,
   SunIcon,
   SunMoonIcon,
+  WrenchIcon,
 } from 'lucide-react'
-import { User } from 'better-auth'
-import { authClient } from '@/lib/auth-client'
+import { authClient, Session } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
+import { isAdmin } from '@/lib/validate'
+import { generateFallbackProfile } from '@/lib/string'
 
 interface UserDropdownProps {
-  user: User
+  session: Session
 }
 
-export const UserDropdown = ({ user }: UserDropdownProps) => {
+export const UserDropdown = ({ session }: UserDropdownProps) => {
   const router = useRouter()
   const { setTheme, theme } = useTheme()
+
+  const { user } = session
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
           imageUrl={user.image ?? undefined}
-          fallbackText={user.name}
-          className="h-8 w-8"
+          fallbackText={generateFallbackProfile(user.name)}
+          className="size-10"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -56,29 +60,37 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <UserAvatar
               imageUrl={user.image ?? undefined}
-              fallbackText={user.name}
-              className="h-8 w-8"
+              fallbackText={generateFallbackProfile(user.name)}
+              className="size-10"
             />
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-medium">{user.name}</span>
+              <div className="flex items-center gap-1">
+                <span className="truncate font-medium">{user.name}</span>
+                {isAdmin(session) && <WrenchIcon className="size-4 text-blue-500" />}
+              </div>
               <span className="text-muted-foreground truncate text-xs">{user.email}</span>
             </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onSelect={() => router.push('/registration-status')}>
-            <FileUserIcon className="mr-2 h-4 w-4" />
-            Status Registrasi
-          </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => router.push('/registration-form')}>
-            <FilePenLineIcon className="mr-2 h-4 w-4" />
-            Formulir Pendaftaran
-          </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => router.push('/dashboard')}>
-            <LayoutDashboardIcon className="mr-2 h-4 w-4" />
-            Dashboard
-          </DropdownMenuItem>
+          {!isAdmin(session) ? (
+            <>
+              <DropdownMenuItem onSelect={() => router.push('/registration-status')}>
+                <FileUserIcon className="mr-2 h-4 w-4" />
+                Status Registrasi
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => router.push('/registration-form')}>
+                <FilePenLineIcon className="mr-2 h-4 w-4" />
+                Formulir Pendaftaran
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <DropdownMenuItem onSelect={() => router.push('/dashboard')}>
+              <LayoutDashboardIcon className="mr-2 h-4 w-4" />
+              Dashboard
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
