@@ -11,6 +11,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string(),
     RESEND_API_KEY: z.string(),
     RESEND_EMAIL_FROM: z.email(),
+    ADMIN_USER_ID: z.string(),
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   },
   // For Next.js >= 13.4.4, you can just reference process.env:

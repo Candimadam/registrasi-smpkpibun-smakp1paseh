@@ -28,7 +28,11 @@ export const auth = betterAuth({
       clientSecret: env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-  plugins: [admin()],
+  plugins: [
+    admin({
+      adminUserIds: [env.ADMIN_USER_ID],
+    }),
+  ],
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
       const path = ctx.path
