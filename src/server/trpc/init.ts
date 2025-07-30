@@ -2,14 +2,13 @@ import { initTRPC, TRPCError } from '@trpc/server'
 import { cache } from 'react'
 import superjson from 'superjson'
 import { auth } from '../auth/auth'
-import { headers } from 'next/headers'
 import { db } from '@/server/lib/db'
 import { ZodError } from 'zod'
 import { isAdminServer } from '../lib/helper'
 
 export const createTRPCContext = cache(async (opts: { headers: Headers }) => {
   const session = await auth.api.getSession({
-    headers: await headers(),
+    headers: opts.headers,
   })
 
   return {
