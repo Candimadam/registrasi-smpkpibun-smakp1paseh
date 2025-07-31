@@ -31,9 +31,6 @@ export const appRouter = createTRPCRouter({
         text: z.string(),
       })
     )
-    .use(({ ctx, next }) => {
-      return next()
-    })
     .query(({ input }) => {
       return {
         greeting: `admin hello ${input.text}`,

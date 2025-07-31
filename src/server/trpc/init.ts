@@ -5,16 +5,16 @@ import { auth } from '../auth/auth'
 import { db } from '@/server/lib/db'
 import { ZodError } from 'zod'
 import { isAdminServer } from '../lib/helper'
+import { headers } from 'next/headers'
 
-export const createTRPCContext = cache(async (opts: { headers: Headers }) => {
+export const createTRPCContext = cache(async () => {
   const session = await auth.api.getSession({
-    headers: opts.headers,
+    headers: await headers(),
   })
 
   return {
     db,
     session,
-    ...opts,
   }
 })
 
